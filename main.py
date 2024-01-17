@@ -66,7 +66,9 @@ class Scraper():
         resp = self.make_request(url)
         soup = self.make_soup(resp)
         locations_lis = soup.select('div.location>ul>li')
-        content = soup.select_one('div.filter-location>div.fitler-field-content').getText(strip=True)
+        # content = soup.select_one('div.filter-location>div.fitler-field-content').getText(strip=True)
+        content = self.extract_text(soup,'div.filter-location>div.fitler-field-content')
+        content = 'City or suburb' if content == '' else content
 
         for li in locations_lis:
             url = "https://www.whereorg.com" + li.select_one('a')['href']
